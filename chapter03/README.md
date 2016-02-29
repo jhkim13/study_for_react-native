@@ -14,14 +14,16 @@ $ brew install flow #(선택사항)
 $ npm install -g react-native-cli
 ```
 
-iOS 는 Xcode 를 설치하고 안드로이드는 
+iOS 는 Xcode 를 설치하고 안드로이드는
 http://facebook.github.io/react-native/docs/android-setup.htm
 를 참고해서 설치한다.
 
 
 프로젝트 시작은 아래와 같이 init 명령을 사용한다.
 
+```
 $ react-native init FirstProject
+```
 
 자동으로 아래와 같은 구조가 만들어진다.
 
@@ -61,17 +63,20 @@ $ react-native run-android
 JDK 설치
 GenyMotion 설치
 
+```
 $ npm install -g react-native-cli
 $ react-native init AwesomeProject
 
 $ cd AwesomeProject
 $ react-native run-android
+```
 
 여기까지 실행하면 빌드된 apk 를 주입한다.
 윈도우는 자동으로  react-native start 를 새창에서 띄우지 못하기 때문에 Genymotion 에서 실행이 제대로 이루어지지 않는다.
 
+```
  $ react-native start
-
+```
 
 
 ## View 에 컴포넌트 붙이기
@@ -79,19 +84,19 @@ $ react-native run-android
 
 안드로이드의 경우 MainActivity.java 파일 내에 리액트 엔트리포인트가 아래와 같이 존재한다.
 
-```
-mReactRootView.startReactApplication(mReactInstanceManager, "FirstProject", null); 
+```java
+mReactRootView.startReactApplication(mReactInstanceManager, "FirstProject", null);
 ```
 
 안드로이드는 AppRegistry를 통해 FirstProject 라는 이름의 리액트 컴포넌트를 바운드하게 된다.
 
 ### 리액트 네이티브에서의 imports
-```
+```jsx
 import React, {
 	AppRegistry,
 	StyleSheet,
 	Text,
-	View	
+	View
 } from 'react-native';
 ```
 
@@ -101,11 +106,7 @@ ES2015 의 디스트럭쳐링을 사용해서 리액트 네이티브에서 사�
 ### FirstProject Component
 각 플랫폼의 엔트리포인트가 되는 컴포넌트가 index.xxxxx.js 파일에 선언되어 있다. 네이티브가 웹버전과 다르다면 div, span 대신 Text 와 View 를 썼다는 것 뿐이다.
 
-```
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- */
+```jsx
 'use strict';
 import React, {
 	AppRegistry,
@@ -163,27 +164,33 @@ React 에는 가변값인 state가 존재하고 constructor 에서 초기값을 
 
 가변값에 해당하는 state 는 아래와 같이 사용할 수 있다.
 
+```jsx
 <Text style={styles.welcome}>
 	You input {this.state.zip}.
 </Text>
+```
 
 사용자 입력은 TextInput 이라는 기본 컴포넌트를 사용해서 받을 수 있다.
 
-
+```jsx
 <TextInput
 	style={styles.input}
 	onSubmitEditing={this.textInputHandler} />
+```
 
 input 스타일은 아래와 같이 세팅해보자.
 
+```jsx
 input: {
 	fontSize: 20,
 	borderWidth: 2,
 	height: 40
 }
+```
 
 TextInput 컴포넌트에서 onSubmitEditing 속성에 this._handleTextChange 를 연결시켰는데, 이 이벤트 핸들러는 constructor 안에 선언하면 된다.
 
+```jsx
 constuctor (props) {
 	super(props);
 
@@ -195,10 +202,11 @@ constuctor (props) {
 		this.setState({zip: event.nativeEvent.text});
 	}.bind(this);
 }
+```
 
 ### 데이터 표시하기
 
-```
+```jsx
 'use strict';
 
 import React, {
@@ -249,7 +257,7 @@ const styles = StyleSheet.create({
 
 Forecast.js 를 위와 같이 선언한다. Forecast 컴포넌트의 경우 state를 갖지 않기 때문에 상위 컴포넌트에서 전달하는 prop 값에만 의존한다.
 
-```
+```jsx
 'use strict';
 
 import React, {
@@ -323,7 +331,9 @@ Android 와 iOS 는 각각 리소스를 추가하는 방법이 다르지만 0.14
 
 단순하게 js 파일이 위치한 경로에 이미지파일을 넣고 아래와 같이 가져오면 된다.
 
+```jsx
 <Image source={require('./my-icon.png')} />
+```
 
 다른 스크린 사이즈를 위한 @2x, @3x suffix 도 아래와 같이 지원한다.
 ```
@@ -333,7 +343,7 @@ Android 와 iOS 는 각각 리소스를 추가하는 방법이 다르지만 0.14
     ├── check@2x.png
     └── check@3x.png
 ```
-```
+```jsx
 <Image source={require('./img/check.png')} />
 ```
 
@@ -341,7 +351,7 @@ Android 와 iOS 는 각각 리소스를 추가하는 방법이 다르지만 0.14
 
 require 안의 이미지명은 정적이어야 하므로 아래와 같은 케이스는 주의해야 한다.
 
-```
+```jsx
 // GOOD
 <Image source={require('./my-icon.png')} />
 
@@ -356,7 +366,7 @@ var icon = this.props.active ? require('./my-icon-active.png') : require('./my-i
 
 ### 데이터 fetch하기
 
-```
+```jsx
       fetch('http://api.openweathermap.org/data/2.5/weather?q=' + city + '&units=metric&appid=44db6a862fba0b067b1930da0d769e98')
       .then(response => response.json())
       .then((responseJSON) => {
@@ -381,4 +391,3 @@ var icon = this.props.active ? require('./my-icon-active.png') : require('./my-i
 
 fetch 메서드를 사용하면 jQuery 를 사용해서 ajax 호출을 하는 것처럼 쉽게 데이터를 가져올 수 있고 Promise 를 리턴하기 때문에 가독성 높게 로직을 구성할 수 있다.
 https://fetch.spec.whatwg.org/
-
