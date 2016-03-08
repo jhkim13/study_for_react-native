@@ -1,4 +1,4 @@
-## 챕터2
+## 챕터4
 
 ### HTML 엘리먼트와 네이티브 컴포넌트의 유사성
 HTML과 달리 네이티브에서는 이와 유사한 대체 컴포넌트들을 사용한다. div 대신 View를, img 대신 Image 를 사용하는 것이다. 따라서 네이티브와 웹 간에 코드를 공유하기는 어렵지만 뷰와 비즈니스 로직을 독립적으로 구성한다면 이 부분은 공유할 수 있다.
@@ -6,7 +6,7 @@ HTML과 달리 네이티브에서는 이와 유사한 대체 컴포넌트들을 
 ### Text 컴포넌트
 Text 컴포넌트만 텍스트를 넣을 수 있다.
 
-```react
+```jsx
 <Text>
 	The quick <Text style={{fontStyle: "italic"}}>brown</Text> fox
 	jumped over the lazy <Text style={{fontWeight: "bold"}}>dog</Text>.
@@ -15,7 +15,7 @@ Text 컴포넌트만 텍스트를 넣을 수 있다.
 
 위와 같이 Text 안에 Text 컴포넌트를 중첩시켜 다른 속성을 가진 텍스트를 보여줄 수 있지만 아래와 같이 해당 속성을 가진 컴포넌트를 만드는 것이 더 효율적이다.
 
-```react
+```jsx
 let styles = StyleSheet.create({
 	bold: {
 		fontWeight: "bold"
@@ -49,14 +49,14 @@ export class Strong extends Component {
 ## Image 컴포넌트
 이미지 컴포넌트는 아래와 같이 사용할 수 있고 @2x, @3x 와 같은 프리픽스를 통해 resolution 을 지원할 수 있다.
 
-```react
+```jsx
 <Image source={require('image!puppies')} />
 ```
 
 `image!` 문법을 사용해서 assets 디렉토리에 대해 접근하게 된다. (?)
 웹에 있는 이미지도 아래와 같이 가져올 수 있지만, 미리 크기를 지정해주어야 한다.
 
-```react
+```jsx
 <Image
 	source={{uri: 'https://facebook.github.io/react/img/logo_og.png'}}
 	style={{width: 400, height: 400}}
@@ -65,7 +65,7 @@ export class Strong extends Component {
 
 백그라운드 이미지를 넣는 것은 앞서 챕터에서 살펴본 것 처럼 아래와 같이 이미지 컴포넌트로 감싸서 구현한다.
 
-```react
+```jsx
 <Image source={require('image!puppies')}>
 	{/* Your content here... */}
 </Image>
@@ -76,7 +76,7 @@ export class Strong extends Component {
 ### 터치와 제스쳐
 `TouchableHighlight` 를 사용해서 터치 관련 기능을 제어해줄 수 있다.
 
-```react
+```jsx
 
 <TouchableHighlight
 	onPressIn={this._onPressIn}
@@ -114,7 +114,7 @@ View.props.onResponderReject
 
 http://facebook.github.io/react-native/docs/panresponder.html#content
 
-```react
+```jsx
 this._panResponder = PanResponder.create({
 	onStartShouldSetPanResponder: this._handleStartShouldSetPanResponder,
 	onMoveShouldSetPanResponder: this._handleMoveShouldSetPanResponder,
@@ -127,7 +127,7 @@ this._panResponder = PanResponder.create({
 
 위와 같이 PanResponder 를 선언해준 뒤,
 
-```react
+```jsx
 render () {
 	return (
 		<View
@@ -146,7 +146,7 @@ tab 정도만 확인하는 간단한 경우에는 `TouchableHighlight`, 직접 �
 ### ListView
 리액트 네이티브의 ListView 는 datasource 와 renderRow 두 개의 props 를 필요로 한다. 렌더링하려는 데이터와 데이터를 기준으로 렌더링한 뷰가 필요한 것이다.
 
-```react
+```jsx
 render n() {
 	return (
 		<ListView
@@ -160,7 +160,7 @@ render n() {
 ```
 추가적으로 헤더와 풋터의 뷰에 대한 렌더링 메서드도 지정해줄 수 있다.
 
-```react
+```jsx
 class ListViewTest extends Component {
 	constructor (props) {
 		super(props);
