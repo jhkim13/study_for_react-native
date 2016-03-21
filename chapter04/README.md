@@ -252,3 +252,42 @@ const styles = StyleSheet.create({
 });
 
 ```
+
+### Platform-Specic Components
+기본적으로는 NavigatorIOS 와 같이 특정 플랫폼을 위한 컴포넌트 보다는 Navigator 와 같이 범용 컴포넌트를 사용하는 것이 바람직하지만 안드로이드나 iOS 각각의 디자인 가이드가 존재하기 때문에 이를 따르기 위해서는 특정 플랫폼을 위한 컴포넌트를 사용해야하는 경우도 생긴다. 이때 활용하는 방법이 플랫폼의 suffix 를 사용하는 것이다.
+
+```jsx
+//Switch.ios.js
+var React = require('react-native');
+var { SwitchIOS } = React;
+var Switch = React.createClass({
+	getInitialState () {
+		return {
+			value: false
+		};
+	},
+
+```
+
+```jsx
+//Switch.android.js
+var React = require('react-native');
+var { SwitchAndroid } = React;
+var Switch = React.createClass({
+	getInitialState () {
+		return {
+			value: false
+		};
+	},
+
+```
+
+위와 같이 각 플랫폼 별로 컴포넌트를 만들고 사용하는 영역에서는 아래와 같이 가져오면 플랫폼별로 특화된 컴포넌트를 사용할 수 있다.
+물론 `require` 대신 `import` 로 가져와도 동일하다.
+
+```jsx
+var Switch = require('./switch');
+...
+```
+
+이렇게 일부 컴포넌트만 특정 플랫폼을 위한 컴포넌트를 사용하는 형태로 만들어도 코드 재사용과 해당 플랫폼에 맞는 형태의 UI 를 구성하는데 어려움이 없을 것이다.
